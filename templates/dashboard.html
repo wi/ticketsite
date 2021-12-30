@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1>Dashboard - Administration</h1>
+  <hr>
+
+  <div>
+    <form method="POST" action="">
+      {% from "includes/_formhelpers.html" import render_field %}
+      {{render_field(form.username, class_="form-control")}}
+      <div class="form-group">
+        <label for="perms">Permission Level</label>
+        <select class="form-control" id="perms" name="perms">
+          <option name="0" value="0">0</option>
+          <option name="1" value="1">1</option>
+          <option name="2" value="2">2</option>
+        </select>
+      </div>
+      <input class="btn btn-primary pull-right" type="submit" value="Set Permission">
+    </form>
+  </div>
+
+
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <div class="jumbotron text-center">
+    <h1>Welcome</h1>
+    <p class="lead">ticket.dev</p>
+    {% if session.logged_in == NULL %}
+      <a href="/register" class="btn btn-primary btn-lg">Register</a>
+      <a href="/login" class="btn btn-success btn-lg">Login</a>
+    {% else %}
+      <button type="submit" class="btn btn-primary" onclick="window.location.href='{{ url_for( 'create_ticket') }}';">Create a Ticket </button>
+    {% endif %}
+  </div>
+{% endblock %}

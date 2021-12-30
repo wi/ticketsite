@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1>Ticket ID: {{data._id}}</h1>
+  <small>Created by {{convert_uid_username(data["ticket_owner_uid"])}}</small>
+
+  {% if data["open"] == True and session.permission_level > 0 %}
+      <form method="POST" action="">
+          <input class="btn btn-danger pull-right btn-sm" type="submit" value="Close ticket" name="submit">
+      </form>
+
+  {% elif data["open"] == False and session.permission_level > 0 %}
+      <form method="POST" action="">
+          <input class="btn btn-success pull-right btn-sm" type="submit" value="Reopen ticket" name="submit">
+      </form>
+  {% endif %}
+  <hr>
+  <div>
+    {%for key in data.ticket_messages %}
+        {% if data["ticket_messages"][key]["hidden"] == True %}
+          {% if session.permission_level > 0  %}
+            An agent ({{convert_uid_username(data["ticket_messages"][key]["user"])}})
+          {% else %}
+            An agent
+          {% endif %}
+        {% else %}
+          {{convert_uid_username(data["ticket_messages"][key]["user"])}}
+        {% endif %}
+        {% if data["ticket_messages"][key]["edited"] == 1 %}
+          edited on
+        {% else %}
+          said on
+        {% endif %}
+        {{time_string(data["ticket_messages"][key]["timestamp"])}}
+        :
+        <br>
+        {{data["ticket_messages"][key]["message"]}}
+    <br>
+    <br>
+    {% endfor %}
+  </div>
+  {% if data["open"] == True %}
+  <div class="jumbotron">
+      {% from "includes/_formhelpers.html" import render_field %}
+      <form method="POST" action="">
+          {{ render_field(form.message, class_="form-control", id="message") }}
+          <input class="btn btn-primary pull-right" type="submit" value="Add reply" name="submit">
+      </form>
+  </div>
+  {% endif %}
+{% endblock %}

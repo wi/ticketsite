@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+  <h1>Tickets</h1>
+  <div><p class=inline>Here you can view all the tickets you have made.</p></div>
+  <div>
+      <form method="POST" action="">
+          <input class="btn btn-primary pull-right btn-sm" type="submit" value="Create a Ticket" name="submit">
+      </form>
+      {% if session['permission_level'] > 0 %}
+      <form method="POST" action="">
+          <input class="btn btn-primary pull-right btn-sm" type="submit" value="Toggle view-all" name="submit">
+      </form>
+      {% endif %}
+  </div>
+  <hr style="height:1px">
+  <ul class="list-group">
+    {% for ticket in tickets %}
+      {% if ticket.open == True %}
+        <li class="list-group-item"><a href="viewticket/{{ticket._id}}">Ticket ID: {{ticket._id}}</a> </li>
+      {% else %}
+        <li class="list-group-item"><a href="viewticket/{{ticket._id}}">Ticket ID: {{ticket._id}}</a> <span class="label-danger">🔒</span> </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+{% endblock %}
