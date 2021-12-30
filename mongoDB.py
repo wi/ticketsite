@@ -3,8 +3,7 @@ import pymongo
 
 class MongoHandler:
     def __init__(self, database: str, collection: str = None):
-        self.db = pymongo.MongoClient(
-            "mongodb+srv://ticketAdmin:pSdPa0isP6WdzrNK@cluster0.qzeg4.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
+        self.db = pymongo.MongoClient("URL")
         self.db = self.db[f'{database}']
         if collection is not None:
             self.db = self.db[f'{collection}']
