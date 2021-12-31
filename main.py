@@ -204,7 +204,7 @@ def tickets_with_id(ticket_id):
         flash('That ticket does not exist', 'danger')
         return redirect('/view_tickets')
     else:
-        if not session['permission_level'] > 0 and ticket_info['ticket_owner_uid'] != ticket_info['ticket_owner_uid']:
+        if not session['permission_level'] > 0 and session['uuid'] != ticket_info['ticket_owner_uid']:
             flash('You dont have access to this ticket!', 'danger')
             return redirect('/view_tickets')
         return render_template('view_ticket.html', data=ticket_info, form=form)
